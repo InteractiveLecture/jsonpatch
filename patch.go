@@ -8,12 +8,12 @@ import (
 type OperationType string
 
 const (
-	ADD     OperationType = "add"
-	REMOVE                = "remove"
-	REPLACE               = "replace"
-	COPY                  = "copy"
-	MOVE                  = "move"
-	TEST                  = "test"
+	ADD     OperationType = "ADD"
+	REMOVE                = "REMOVE"
+	REPLACE               = "REPLACE"
+	COPY                  = "COPY"
+	MOVE                  = "MOVE"
+	TEST                  = "TEST"
 )
 
 type Operation struct {

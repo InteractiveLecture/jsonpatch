@@ -5,7 +5,7 @@ type InvalidPatchError struct {
 }
 
 type PatchCompiler interface {
-	Compile(id string, patch *Patch) (*CommandList, error)
+	Compile(patch *Patch, options map[string]interface{}) (*CommandList, error)
 }
 
 func (e InvalidPatchError) Error() string {
@@ -16,7 +16,7 @@ type CommandList struct {
 	Commands []CommandContainer
 }
 
-type ContainerCallback func() error
+type ContainerCallback func(interface{}) error
 
 type CommandContainer interface {
 	ExecuteBefore(interface{}) error
