@@ -9,7 +9,7 @@ import (
 
 func TestPatch(t *testing.T) {
 
-	patchStr := `{"version" : 1, "lecture_id":"123","operations": [{"op": "add", "path": "/biscuits/1", "value": {"name": "Ginger Nut"}}, {"op": "remove", "path": "/biscuits"}]}`
+	patchStr := `{"version" : 1,"operations": [{"op": "ADD", "path": "/biscuits/1", "value": {"name": "Ginger Nut"}}, {"op": "REMOVE", "path": "/biscuits"}]}`
 
 	reader := strings.NewReader(patchStr)
 	patch, err := Decode(reader)
@@ -19,5 +19,4 @@ func TestPatch(t *testing.T) {
 	assert.Equal(t, "/biscuits/1", patch.Operations[0].Path)
 	assert.Equal(t, 2, len(patch.Operations))
 
-	assert.Equal(t, "123", patch.LectureID)
 }
