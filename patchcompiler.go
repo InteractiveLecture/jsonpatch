@@ -16,10 +16,31 @@ type CommandList struct {
 	Commands []CommandContainer
 }
 
-type ContainerCallback func(interface{}) error
+type ContainerCallback func(transaction interface{}, previousResult interface{}) (interface{}, error)
 
-type CommandContainer interface {
-	ExecuteBefore(interface{}) error
-	ExecuteMain(interface{}) error
-	ExecuteAfter(interface{}) error
+type CommandContainer struct {
+	BeforeCallback ContainerCallback
+	MainCallback   ContainerCallback
+	AfterCallback  ContainerCallback
+}
+
+func (c *CommandContainer) ExecuteMain(transaction interface{}, prev interface{}) (interface{}, error) {
+	if c.MainCallback != nil {
+		return c.MainCallback(transaction, prev)
+	}
+	return nil, nil
+}
+
+func (c *CommandContainer) ExecuteAfter(transaction, prev interface{}) (interface{}, error) {
+	if c.AfterCallback != nil {
+		return c.AfterCallback(transaction, prev)
+	}
+	return nil, nil
+}
+
+func (c *CommandContainer) ExecuteBefore(transaction interface{}) (interface{}, error) {
+	if c.BeforeCallback != nil {
+		return c.BeforeCallback(transaction, nil)
+	}
+	return nil, nil
 }
