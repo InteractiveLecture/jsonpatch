@@ -13,7 +13,11 @@ func (e InvalidPatchError) Error() string {
 }
 
 type CommandList struct {
-	Commands []CommandContainer
+	Commands []*CommandContainer
+}
+
+func (cl *CommandList) AddCommands(commands ...*CommandContainer) {
+	cl.Commands = append(cl.Commands, commands...)
 }
 
 type ContainerCallback func(transaction interface{}, previousResult interface{}) (interface{}, error)
